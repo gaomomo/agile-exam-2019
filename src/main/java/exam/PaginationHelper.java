@@ -11,21 +11,32 @@ public class PaginationHelper<I> {
      * 1）数组collection，表示需要分页的所有元素
      * 2）数字itemsPerPage，表示每页的元素个数
      */
+	private List<I> collection;
+	private int itemsPerPage;
+	private int pages;
+	private int count;
+	
     public PaginationHelper(List<I> collection, int itemsPerPage) {
+    	this.collection = collection;
+    	this.itemsPerPage = itemsPerPage;
     }
 
     /**
      * 返回collection中所有元素的个数
      */
     public int itemCount() {
-        throw new RuntimeException();
+    	return count = this.collection.size();
+//        throw new RuntimeException();
     }
 
     /**
      * 返回页数
      */
     public int pageCount() {
-        throw new RuntimeException();
+    	int num = this.collection.size() / this.itemsPerPage;
+    	pages=this.collection.size() % this.itemsPerPage == 0 ? num : num+1;
+    	return pages;
+//        throw new RuntimeException();
     }
 
     /**
@@ -34,7 +45,19 @@ public class PaginationHelper<I> {
      * 如果pageIndex为非法值则返回-1
      */
     public int pageItemCount(int pageIndex) {
-        throw new RuntimeException();
+    	if(pageIndex < 0 || pageIndex >= pageCount()) {
+    		return -1;
+    	}else {
+    		if(itemCount() % itemsPerPage == 0) {
+    			return itemsPerPage;
+    		}else if(pageIndex == pageCount() - 1){
+    			 {
+    				return itemCount() % itemsPerPage;
+    			}
+    		}else {
+    			return itemsPerPage;
+    		}
+    	}
     }
 
     /**
@@ -43,6 +66,11 @@ public class PaginationHelper<I> {
      * 如果itemIndex为非法值则返回-1
      */
     public int pageIndex(int itemIndex) {
-        throw new RuntimeException();
+    	if(itemIndex <= 0 || itemIndex > itemCount()) {
+    		return -1;
+    	}else {
+    		return itemIndex / itemsPerPage;
+    		
+    	}
     }
 }
